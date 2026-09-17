@@ -1,0 +1,10 @@
+{
+  "name": "fix-a-lot.github.io",
+  "packageManager": "yarn@4.18.0",
+  "scripts": {
+    "live": "live-server"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

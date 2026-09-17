@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/image/niniz-bbanya.jpg">
+<link rel="shortcut icon" href="/image/niniz-bbanya.jpg">
+<link rel="stylesheet" href="/css/normalize.css" />
+<link rel="stylesheet" href="/css/letters.css" />
+<link rel="stylesheet" href="/css/style.css"/>
+<title>fixalot.github.io</title>
+</head>
+<body>
+<main class="align-center rp-page">
+  <header class="rp-header">
+    <h1>🖐️ 당번 뽑기</h1>
+    <p class="rp-subtitle">이름을 공백으로 구분해서 입력하고 뽑기 버튼을 눌러보세요.</p>
+  </header>
+
+  <section class="card rp-input-card">
+    <input type="text" id="txtInpt1" autofocus tabindex="1" placeholder="공백으로 구분하세요. (예: 김 이 박)">
+    <button class="btns effect-push rp-pick-button" id="btn1" type="button">뽑!</button>
+    <button class="btns effect-push rp-save-button" tabindex="2" type="button" id="btn2">명단 저장하기</button>
+    <div class="result hidden" id="result">
+      <ul class="rp-result-list" id="resultList"></ul>
+    </div>
+  </section>
+
+  <div class="rp-grid">
+    <section class="card">
+      <h2 class="rp-section-title">지난 당번</h2>
+      <ul class="rp-history-list" id="histories"></ul>
+    </section>
+    <section class="card">
+      <h2 class="rp-section-title">저장된 명단</h2>
+      <ul class="rp-save-list" id="saveList"></ul>
+    </section>
+  </div>
+</main>
+
+<script type="module" src="/js/random-pick.js"></script>
+</body>
+</html>

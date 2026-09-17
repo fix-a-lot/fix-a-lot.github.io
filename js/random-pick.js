@@ -82,23 +82,56 @@ function cutHistory(winningHistory) {
   return winningHistory;
 }
 
+function pad2(num) {
+  return String(num).padStart(2, '0');
+}
+
+function formatDateTime(isoString) {
+  let date = new Date(isoString);
+  let yyyy = date.getFullYear();
+  let MM = pad2(date.getMonth() + 1);
+  let dd = pad2(date.getDate());
+  let HH = pad2(date.getHours());
+  let mm = pad2(date.getMinutes());
+  let ss = pad2(date.getSeconds());
+  return `${yyyy}-${MM}-${dd} ${HH}:${mm}:${ss}`;
+}
+
 function drawHistory({parent, winningHistory}) {
-  winningHistory.forEach(ele => appendLiText({parent, innerText: `${ele.when}: ${ele.winner.who}`}))
+  winningHistory.forEach(ele => appendLiText({parent, innerText: `${formatDateTime(ele.when)} ${ele.winner.who}`}))
+}
+
+/**
+ * 이전 버전과의 호환을 위해 문자열로만 저장된 프리셋을 객체로 변환
+ */
+function normalizePreset(preset) {
+  if (typeof preset === 'string') {
+    return {id: preset, name: preset, players: preset};
+  }
+  return preset;
 }
 
 function loadPlayersList() {
   let playersList = localStorage.getItem('playersList');
-  return playersList ? JSON.parse(playersList) : [];
+  if (!playersList) {
+    return [];
+  }
+  return JSON.parse(playersList).map(normalizePreset);
 }
 
-function storePlayersList(players) {
+function storePlayersList(preset) {
   let playersList = loadPlayersList();
-  playersList.unshift(players);
+  playersList.unshift(preset);
+  localStorage.setItem('playersList', JSON.stringify(playersList));
+}
+
+function deletePlayersList(id) {
+  let playersList = loadPlayersList().filter(preset => preset.id !== id);
   localStorage.setItem('playersList', JSON.stringify(playersList));
 }
 
 function drawPlayersList({parent, playersList}) {
-  playersList.forEach(players => {
+  playersList.forEach(preset => {
     let $li = document.createElement('li');
     parent.appendChild($li);
 
@@ -111,24 +144,26 @@ function drawPlayersList({parent, playersList}) {
     $loadButton.classList.add('lightgray');
     $loadButton.classList.add('effect-push');
     $loadButton.addEventListener('click', e => {
-      $txtInpt1.value = players;
+      $txtInpt1.value = preset.players;
     });
 
-    // let $deleteButton = document.createElement('button');
-    // $li.appendChild($deleteButton);
-    // $deleteButton.type = 'button';
-    // $deleteButton.innerText = '삭제';
-    // $deleteButton.classList.add('btns');
-    // $deleteButton.classList.add('size-lesser');
-    // $deleteButton.classList.add('lightgray');
-    // $deleteButton.classList.add('effect-push');
-    // $deleteButton.addEventListener('click', e => {
-
-    // });
+    let $deleteButton = document.createElement('button');
+    $li.appendChild($deleteButton);
+    $deleteButton.type = 'button';
+    $deleteButton.innerText = '삭제';
+    $deleteButton.classList.add('btns');
+    $deleteButton.classList.add('size-lesser');
+    $deleteButton.classList.add('lightgray');
+    $deleteButton.classList.add('effect-push');
+    $deleteButton.addEventListener('click', e => {
+      deletePlayersList(preset.id);
+      clear($saveList);
+      drawPlayersList({parent: $saveList, playersList: loadPlayersList()});
+    });
 
     let $span = document.createElement('span');
     $li.appendChild($span);
-    $span.innerText = ' ' + players;
+    $span.innerText = ' ' + preset.name;
   });
 }
 
@@ -161,10 +196,15 @@ function handleSaveButtonClick() {
   }
   value = value.trim()
   let playersList = loadPlayersList();
-  if (playersList.some(e => e === value)) { // 중복이면
+  if (playersList.some(preset => preset.players === value)) { // 중복이면
     return;
   }
-  storePlayersList(value);
+  let name = window.prompt('프리셋 이름을 입력하세요.', value);
+  if (name === null) { // 취소
+    return;
+  }
+  name = name.trim() || value;
+  storePlayersList({id: `${Date.now()}`, name, players: value});
   clear($saveList);
   drawPlayersList({parent: $saveList, playersList: loadPlayersList()});
 }
