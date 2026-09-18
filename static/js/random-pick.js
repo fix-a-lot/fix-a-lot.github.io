@@ -49,6 +49,7 @@ function pickWinner(players) {
   let min = playResults.reduce((a, b) => (a.num > b.num ? b : a));
   min.numTxt += ' 🥳';
   drawResult({parent: $resultList, playResults});
+  console.log('## min:', min); // XXX test code
   return min;
 }
 
@@ -98,7 +99,9 @@ function formatDateTime(isoString) {
 }
 
 function drawHistory({parent, winningHistory}) {
-  winningHistory.forEach(ele => appendLiText({parent, innerText: `${formatDateTime(ele.when)} ${ele.winner.who}`}));
+  winningHistory.forEach(ele =>
+    appendLiText({parent, innerText: `${formatDateTime(ele.when)} ${ele.winner.who} (${ele.winner.num})`})
+  );
 }
 
 /**
@@ -138,7 +141,7 @@ function drawPlayersList({parent, playersList}) {
     let $loadButton = document.createElement('button');
     $li.appendChild($loadButton);
     $loadButton.type = 'button';
-    $loadButton.innerText = '불러오기';
+    $loadButton.innerText = '불러와오';
     $loadButton.classList.add('btns');
     $loadButton.classList.add('size-lesser');
     $loadButton.classList.add('lightgray');
@@ -150,7 +153,7 @@ function drawPlayersList({parent, playersList}) {
     let $deleteButton = document.createElement('button');
     $li.appendChild($deleteButton);
     $deleteButton.type = 'button';
-    $deleteButton.innerText = '삭제';
+    $deleteButton.innerText = '당장 지워오';
     $deleteButton.classList.add('btns');
     $deleteButton.classList.add('size-lesser');
     $deleteButton.classList.add('lightgray');
@@ -200,7 +203,7 @@ function handleSaveButtonClick() {
     // 중복이면
     return;
   }
-  let name = window.prompt('프리셋 이름을 입력하세요.', value);
+  let name = window.prompt('프리셋 이름을 입력해오', value);
   if (name === null) {
     // 취소
     return;
