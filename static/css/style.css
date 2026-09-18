@@ -1,9 +1,11 @@
 @charset "utf-8";
 
-input, select, textarea { 
+input,
+select,
+textarea {
   margin: 1px 1px 1px 1px;
 }
-button { 
+button {
   margin: 1px 1px 1px 1px;
 }
 /* 
@@ -27,8 +29,8 @@ body {
   text-align: left;
   margin: 30px auto;
 }
-hr.light { 
-  margin: 15px 0; 
+hr.light {
+  margin: 15px 0;
   border: none;
   height: 1px;
   background: rgba(0, 0, 0, 0.1);
@@ -64,10 +66,10 @@ hr.light {
   margin: 60px 1px 1px 1px;
 }
 a.back-button {
-  background: #2F3545;
-	color: rgb(255, 255, 255);
-	border: 1px solid grey;
-	padding: 6px 10px;
+  background: #2f3545;
+  color: rgb(255, 255, 255);
+  border: 1px solid grey;
+  padding: 6px 10px;
 }
 .btns {
   display: inline-block;

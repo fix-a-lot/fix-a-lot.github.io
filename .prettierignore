@@ -1,0 +1,34 @@
+old*/
+
+# ######### ######### #########
+
+# Node.js
+node_modules/
+.yarn/
+.pnp.*
+yarn.lock
+package-lock.json
+
+# Python
+.venv
+
+# Build output
+.next
+out
+dist
+build
+coverage
+
+# Cache
+.cache
+.parcel-cache
+.turbo
+.vercel
+
+# Libraries
+*.min.js
+*.min.css
+
+# ETC.
+public/vendor
+public/generated

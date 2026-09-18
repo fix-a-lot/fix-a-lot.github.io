@@ -43,10 +43,10 @@ function pickWinner(players) {
       who: player.trim(),
       num: randomNumber,
       numTxt: String(randomNumber).padStart(2, '0')
-    }
+    };
     playResults.push(obj);
   }
-  let min = playResults.reduce((a, b) => a.num > b.num ? b : a);
+  let min = playResults.reduce((a, b) => (a.num > b.num ? b : a));
   min.numTxt += ' 🥳';
   drawResult({parent: $resultList, playResults});
   return min;
@@ -54,7 +54,7 @@ function pickWinner(players) {
 
 /**
  * 뽑 이력
- * 
+ *
  * @returns Object[]
  */
 function loadWinningHistory() {
@@ -98,7 +98,7 @@ function formatDateTime(isoString) {
 }
 
 function drawHistory({parent, winningHistory}) {
-  winningHistory.forEach(ele => appendLiText({parent, innerText: `${formatDateTime(ele.when)} ${ele.winner.who}`}))
+  winningHistory.forEach(ele => appendLiText({parent, innerText: `${formatDateTime(ele.when)} ${ele.winner.who}`}));
 }
 
 /**
@@ -194,13 +194,15 @@ function handleSaveButtonClick() {
   if (!value) {
     return;
   }
-  value = value.trim()
+  value = value.trim();
   let playersList = loadPlayersList();
-  if (playersList.some(preset => preset.players === value)) { // 중복이면
+  if (playersList.some(preset => preset.players === value)) {
+    // 중복이면
     return;
   }
   let name = window.prompt('프리셋 이름을 입력하세요.', value);
-  if (name === null) { // 취소
+  if (name === null) {
+    // 취소
     return;
   }
   name = name.trim() || value;
@@ -216,7 +218,7 @@ function attachEventHandlers() {
 }
 
 (function fireImmediatly() {
-  attachEventHandlers()
+  attachEventHandlers();
   $txtInpt1.value = localStorage.getItem('latestUserInput1');
   drawHistory({parent: $histories, winningHistory: loadWinningHistory()});
   drawPlayersList({parent: $saveList, playersList: loadPlayersList()});

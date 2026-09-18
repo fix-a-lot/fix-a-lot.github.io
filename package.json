@@ -1,10 +1,18 @@
 {
   "name": "fix-a-lot.github.io",
   "packageManager": "yarn@4.18.0",
-  "scripts": {
-    "live": "live-server"
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,cjs,cts,mjs,mts,json,vue,astro,css,sass,md}": "prettier --write"
   },
   "devDependencies": {
-    "live-server": "^1.2.2"
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "live-server": "^1.2.2",
+    "prettier": "^3.9.7"
+  },
+  "scripts": {
+    "live": "live-server",
+    "format": "prettier --write .",
+    "prepare": "husky"
   }
 }
