@@ -49,7 +49,6 @@ function pickWinner(players) {
   let min = playResults.reduce((a, b) => (a.num > b.num ? b : a));
   min.numTxt += ' 🥳';
   drawResult({parent: $resultList, playResults});
-  console.log('## min:', min); // XXX test code
   return min;
 }
 
